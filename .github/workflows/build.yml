@@ -3,19 +3,13 @@ name: Docker Image CI
 on:
   push:
     
-env:
-  IMAGE_NAME: eventrouter
-  
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
-    - name: Login Build Push
-      run: |
+      - uses: actions/checkout@v2
+      - name: Login Build Push
+        run: |
           docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}" ${MTR}
           export TAG=`git describe --match=$(git rev-parse --short=8 HEAD) --always --dirty --abbrev=8`
           ## fix for "layer does not exists" error
