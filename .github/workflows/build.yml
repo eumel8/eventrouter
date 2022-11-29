@@ -11,12 +11,12 @@ jobs:
       - name: Login Build Push
         run: |
           docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}" ${MTR}
-          export TAG=`git describe --match=$(git rev-parse --short=8 HEAD) --always --dirty --abbrev=8`
+          # export TAG=`git describe --match=$(git rev-parse --short=8 HEAD) --always --dirty --abbrev=8`
           ## fix for "layer does not exists" error
           ## https://github.com/moby/moby/issues/37965 
           export DOCKER_BUILDKIT=1
-          docker build -f Dockerfile.rhel8 -t ${MTR}/${REPO}/${IMAGE}:${TAG} .
-          docker push ${MTR}/${REPO}/${IMAGE}:${TAG}
+          docker build -f Dockerfile.rhel8 -t ${MTR}/${REPO}/${IMAGE}:${GITHUB_REF_NAME}.
+          docker push ${MTR}/${REPO}/${IMAGE}:${GITHUB_REF_NAME}
         env:
           DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
           DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
