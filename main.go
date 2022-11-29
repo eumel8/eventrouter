@@ -72,6 +72,7 @@ func loadConfig() kubernetes.Interface {
 	viper.AddConfigPath(".")
 	viper.SetDefault("kubeconfig", "")
 	viper.SetDefault("sink", "glog")
+	viper.SetDefault("namespace", "default")
 	viper.SetDefault("resync-interval", time.Minute*30)
 	viper.SetDefault("enable-prometheus", true)
 	if err = viper.ReadInConfig(); err != nil {
@@ -95,6 +96,7 @@ func loadConfig() kubernetes.Interface {
 	}
 
 	// creates the clientset from kubeconfig
+	// namespace, err := config.Namespace()
 	clientset, err := kubernetes.NewForConfig(config)
 	if err != nil {
 		panic(err.Error())
@@ -107,7 +109,9 @@ func main() {
 	var wg sync.WaitGroup
 
 	clientset := loadConfig()
-	sharedInformers := informers.NewSharedInformerFactory(clientset, viper.GetDuration("resync-interval"))
+	informerOptions := make([]informers.SharedInformerOption, 0)
+	informerOptions = append(informerOptions, informers.WithNamespace(viper.GetString("namespace")))
+	sharedInformers := informers.NewSharedInformerFactoryWithOptions(clientset, viper.GetDuration("resync-interval"), informerOptions...)
 	eventsInformer := sharedInformers.Core().V1().Events()
 
 	// TODO: Support locking for HA https://github.com/kubernetes/kubernetes/pull/42666

@@ -1,0 +1,46 @@
+replicaCount: 1
+
+image:
+  repository: mtr.devops.telekom.de/eumel8/eventrouter
+  pullPolicy: IfNotPresent
+  tag: 1.0.0
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+#podSecurityContext: {}
+podSecurityContext:
+  fsGroup: 65532
+
+#securityContext: {}
+securityContext:
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 65532
+
+#resources: {}
+resources:
+  limits:
+    cpu: 400m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
