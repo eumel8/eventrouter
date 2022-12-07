@@ -23,6 +23,7 @@ jobs:
         version: 'v1.21.2-k3s1'
     - name: helm lint
       run: |
+        sleep 20
         kubectl get nodes
         helm lint chart
     - name: helm push
