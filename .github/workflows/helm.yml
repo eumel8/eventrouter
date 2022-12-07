@@ -26,8 +26,8 @@ jobs:
         docker ps
         ps -ef
         sleep 20
-        kubectl get nodes
-        helm lint chart
+        #kubectl get nodes
+        #helm lint chart
     - name: helm push
       run: |
         helm version
