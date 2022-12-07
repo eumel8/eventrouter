@@ -21,6 +21,10 @@ jobs:
       id: k3s
       with:
         version: 'v1.21.2-k3s1'
+      run: |
+        docker ps
+        ps -ef
+        sleep 20
     - name: helm lint
       run: |
         docker ps
