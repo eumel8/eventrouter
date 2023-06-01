@@ -3,7 +3,7 @@ WORKDIR  /go/src/github.com/openshift/eventrouter
 USER 0
 COPY . .
 ARG TARGETOS TARGETARCH
-RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build .
+RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build . -buildvcs=false
 
 FROM registry.access.redhat.com/ubi8:8.8
 COPY --from=builder /go/src/github.com/openshift/eventrouter/eventrouter /bin/eventrouter
