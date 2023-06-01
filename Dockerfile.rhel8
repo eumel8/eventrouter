@@ -8,4 +8,4 @@ RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH GOFLAGS=-buildvcs=false go b
 FROM registry.access.redhat.com/ubi8:8.8
 COPY --from=builder /go/src/github.com/openshift/eventrouter/eventrouter /bin/eventrouter
 CMD ["/bin/eventrouter", "-v", "3", "-logtostderr"]
-LABEL version=v1.0.0
+LABEL version=v1.0.2
