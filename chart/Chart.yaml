@@ -2,8 +2,8 @@ apiVersion: v2
 name: eventrouter
 description: A Helm chart for get events and write them to Stdout
 type: application
-version: 1.0.3
-appVersion: "1.0.3"
+version: 1.0.4
+appVersion: "1.0.4"
 sources:
   - https://github.com/eumel8/eventrouter
 maintainers:
